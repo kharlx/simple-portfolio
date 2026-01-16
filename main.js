@@ -91,8 +91,33 @@ toggle.addEventListener('change', () => {
   applyTheme(toggle.checked ? 'dark' : 'light');
 });
 
-const savedTheme = localStorage.getItem('theme') || 'light';
-applyTheme(savedTheme);
+
+const charCount = document.getElementById('char-count');
+
+input.addEventListener('input', () => {
+  const length = input.value.length;
+  charCount.textContent = `${length}/1000`;
+});
+
+
+// load saved theme
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  if (savedTheme === "dark") toggle.checked = true;
+}
+
+// when user switches
+toggle.addEventListener("change", () => {
+  if (toggle.checked) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light");
+  }
+});
+
 
 
 
